@@ -56,7 +56,7 @@ public class FilmControllerTest {
         Film nonUpdatable = new Film(4, "Non Updatable", "TestFilmDescription",
                 LocalDate.of(1996, 11, 3), 120);
 
-        assertThrows(DoesNotExistException.class, () ->filmController.updateFilm(nonUpdatable), "Должен выбросить исключение");
+        assertThrows(DoesNotExistException.class, () -> filmController.updateFilm(nonUpdatable), "Должен выбросить исключение");
 
         Film updatedFilm = filmController.updateFilm(new Film(1, "TestFilm", "TestFilmDescription",
                 LocalDate.of(1996, 11, 3), 120));
@@ -71,7 +71,7 @@ public class FilmControllerTest {
 
         assertTrue(emptyFilmList.isEmpty(), "Фильмы пока не были добавлены");
 
-        Film film1 = filmController.createFilm(new Film(0,"TestFilm", "TestFilmDescription",
+        Film film1 = filmController.createFilm(new Film(0, "TestFilm", "TestFilmDescription",
                 LocalDate.of(1996, 11, 3), 120));
         assertEquals(1, filmController.findAll().size(), "Неверный размер списка фильмов");
         assertEquals(film1, filmController.findAll().get(0), "Сохранен не тот фильм");
