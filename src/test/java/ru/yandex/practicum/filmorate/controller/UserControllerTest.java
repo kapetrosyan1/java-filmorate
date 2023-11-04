@@ -56,13 +56,13 @@ public class UserControllerTest {
 
     @Test
     void userUpdateTest() {
-        User user1 = userController.createUser(new User(0, "usermail1@gmail.com", "user1Login",
+        userController.createUser(new User(0, "usermail1@gmail.com", "user1Login",
                 "User Userovich", LocalDate.of(1996, 11, 3)));
 
-        User nonUpdatabble = new User(0, "updatedUsermail1@gmail.com", "updatedUser1Login",
+        User nonUpdatable = new User(0, "updatedUsermail1@gmail.com", "updatedUser1Login",
                 "NewUser Userovich", LocalDate.of(1996, 11, 3));
 
-        assertThrows(DoesNotExistException.class, () -> userController.updateUser(nonUpdatabble), "Должен выбросить исключение");
+        assertThrows(DoesNotExistException.class, () -> userController.updateUser(nonUpdatable), "Должен выбросить исключение");
 
         User updatedUser = userController.updateUser(new User(1, "updatedUsermail1@gmail.com", "updatedUser1Login",
                 "NewUser Userovich", LocalDate.of(1996, 11, 3)));

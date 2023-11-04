@@ -51,7 +51,7 @@ public class FilmControllerTest {
 
     @Test
     void updateFilmTest() {
-        Film film = filmController.createFilm(new Film(0, "TestFilm", "TestFilmDescription",
+        filmController.createFilm(new Film(0, "TestFilm", "TestFilmDescription",
                 LocalDate.of(1996, 11, 3), 120));
         Film nonUpdatable = new Film(4, "Non Updatable", "TestFilmDescription",
                 LocalDate.of(1996, 11, 3), 120);
