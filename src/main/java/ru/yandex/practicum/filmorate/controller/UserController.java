@@ -19,7 +19,7 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
     private final Map<Integer, User> users = new HashMap<>();
-    private final static Logger log = LoggerFactory.getLogger(UserController.class);
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private int userNextId = 1;
 
     @GetMapping
