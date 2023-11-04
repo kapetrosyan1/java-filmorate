@@ -40,7 +40,7 @@ public class UserController {
         userNextId++;
         users.put(user.getId(), user);
         log.info("Пользователь с email {}, логином {} и id {} был успешно добавлен. Текущее количество " +
-                        "пользователей в базе: {}", user.getEmail(), user.getLogin(), user.getId(), users.size());
+                "пользователей в базе: {}", user.getEmail(), user.getLogin(), user.getId(), users.size());
         return user;
     }
 
