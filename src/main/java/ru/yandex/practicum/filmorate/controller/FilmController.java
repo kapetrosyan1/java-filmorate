@@ -63,15 +63,18 @@ public class FilmController {
         if (film.getName() == null || film.getName().isBlank()) {
             log.info("Выполнение метода прервано. Ошибка названия фильма. Название фильма: {}", film.getName());
             throw new ValidationException("Название фильма не может быть пустым");
-        } else if (film.getDescription().length() > 200) {
+        }
+        if (film.getDescription().length() > 200) {
             log.info("Выполнение метода прервано. Ошибка описания фильма. Текущая длина описания: {}",
                     film.getDescription().length());
             throw new ValidationException("Превышена максимально допустимая длина описания фильма");
-        } else if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
+        }
+        if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
             log.info("Выполнение метода прервано. Ошибка даты релиза фильма. Указанная дата релиза: {}",
                     film.getReleaseDate());
             throw new ValidationException("Ошибка даты релиза фильма");
-        } else if (film.getDuration() <= 0) {
+        }
+        if (film.getDuration() <= 0) {
             log.info("Выполнение метода прервано. Ошибка продолжительности фильма. Указана продолжительность: {}",
                     film.getDuration());
             throw new ValidationException("Продолжительность фильма должна быть положительной");
