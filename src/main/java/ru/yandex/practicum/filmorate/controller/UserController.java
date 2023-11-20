@@ -7,7 +7,6 @@ import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -25,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/friends")
-    public Set<User> findUserFriends(@PathVariable Integer id) {
+    public List<User> findUserFriends(@PathVariable Integer id) {
         return service.findUserFriends(id);
     }
 

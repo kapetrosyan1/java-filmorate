@@ -22,8 +22,4 @@ public class Film {
     @Positive(message = "Продолжительность фильма должна быть больше 0")
     private long duration;
     private final Set<Integer> likes = new HashSet<>();
-
-    public int getLikesCount() {
-        return likes.size();
-    }
 }

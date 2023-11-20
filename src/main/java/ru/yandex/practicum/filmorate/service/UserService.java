@@ -6,10 +6,7 @@ import ru.yandex.practicum.filmorate.exception.DoesNotExistException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,8 +26,8 @@ public class UserService {
         return userStorage.findById(id);
     }
 
-    public Set<User> findUserFriends(int userId) {
-        Set<User> friends = new HashSet<>();
+    public List<User> findUserFriends(int userId) {
+        List<User> friends = new ArrayList<>();
 
         for (int id : userStorage.findById(userId).getFriends()) {
             friends.add(userStorage.findById(id));
