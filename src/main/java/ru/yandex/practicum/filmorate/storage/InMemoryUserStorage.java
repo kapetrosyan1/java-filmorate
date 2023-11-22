@@ -59,18 +59,34 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     private void userValidationTest(User user) {
+        emailValidation(user);
+        loginValidation(user);
+        birthdayValidation(user);
+        setLoginAsNameIfBlankOrNull(user);
+    }
+
+    private void emailValidation(User user) {
         if (user.getEmail() == null || user.getEmail().isBlank() || !user.getEmail().contains("@")) {
             log.info("Выполнение метода прервано: некорректный email. Указанный email: {}", user.getEmail());
             throw new ValidationException("Некорректный адрес электронной почты");
         }
+    }
+
+    private void loginValidation(User user) {
         if (user.getLogin() == null || user.getLogin().isBlank() || user.getLogin().contains(" ")) {
             log.info("Выполнение метода прервано: некорректный логин. Указанный логин: {}", user.getLogin());
             throw new ValidationException("Логин не может быть пустым или содержать пробелы");
         }
+    }
+
+    private void birthdayValidation(User user) {
         if (user.getBirthday().isAfter(LocalDate.now())) {
             log.info("Выполнение метода прервано: некорректная дата рождения пользователя. Указанная дата: {}", user.getBirthday());
             throw new ValidationException("Указана неправильная дата рождения");
         }
+    }
+
+    private void setLoginAsNameIfBlankOrNull(User user) {
         if (user.getName() == null || user.getName().isBlank()) {
             log.info("Пользователь не указал имя. Имени присвоено значение логина {}", user.getLogin());
             user.setName(user.getLogin());

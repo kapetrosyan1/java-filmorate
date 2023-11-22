@@ -61,20 +61,37 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     private void filmValidationTest(Film film) {
+        validateName(film);
+        validateDescription(film);
+        validateReleaseDate(film);
+        validateDuration(film);
+        log.info("Фильм успешно прошел валидацию");
+    }
+
+    private void validateName(Film film) {
         if (film.getName() == null || film.getName().isBlank()) {
             log.info("Выполнение метода прервано. Ошибка названия фильма. Название фильма: {}", film.getName());
             throw new ValidationException("Название фильма не может быть пустым");
         }
+    }
+
+    private void validateDescription(Film film) {
         if (film.getDescription().length() > 200) {
             log.info("Выполнение метода прервано. Ошибка описания фильма. Текущая длина описания: {}",
                     film.getDescription().length());
             throw new ValidationException("Превышена максимально допустимая длина описания фильма");
         }
+    }
+
+    private void validateReleaseDate(Film film) {
         if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
             log.info("Выполнение метода прервано. Ошибка даты релиза фильма. Указанная дата релиза: {}",
                     film.getReleaseDate());
             throw new ValidationException("Ошибка даты релиза фильма");
         }
+    }
+
+    private void validateDuration(Film film) {
         if (film.getDuration() <= 0) {
             log.info("Выполнение метода прервано. Ошибка продолжительности фильма. Указана продолжительность: {}",
                     film.getDuration());

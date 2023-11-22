@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.DoesNotExistException;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -14,7 +13,6 @@ public class FilmService {
 
     private final FilmStorage filmStorage;
 
-    @Autowired
     public FilmService(FilmStorage filmStorage) {
         this.filmStorage = filmStorage;
     }
@@ -36,17 +34,13 @@ public class FilmService {
     }
 
     public void addLike(int filmId, int userId) {
-        if (filmId < 1 || userId < 1) {
-            throw new DoesNotExistException("Введен не существующий идентификатор фильма либо пользователя");
-        }
+        checkFilmAndUserId(filmId, userId);
         Film film = filmStorage.findById(filmId);
         film.getLikes().add(userId);
     }
 
     public void removeLike(int filmId, int userId) {
-        if (filmId < 1 || userId < 1) {
-            throw new DoesNotExistException("Введен не существующий идентификатор фильма либо пользователя");
-        }
+        checkFilmAndUserId(filmId, userId);
         Film film = filmStorage.findById(filmId);
         film.getLikes().remove(userId);
     }
@@ -59,5 +53,11 @@ public class FilmService {
                 .sorted((f0, f1) -> -1 * (f0.getLikes().size() - f1.getLikes().size()))
                 .limit(count)
                 .collect(Collectors.toList());
+    }
+
+    private void checkFilmAndUserId(int filmId, int userId) {
+        if (filmId < 1 || userId < 1) {
+            throw new DoesNotExistException("Введен не существующий идентификатор фильма либо пользователя");
+        }
     }
 }
