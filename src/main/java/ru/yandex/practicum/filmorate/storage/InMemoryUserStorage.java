@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.AlreadyExistException;
 import ru.yandex.practicum.filmorate.exception.DoesNotExistException;
+import ru.yandex.practicum.filmorate.exception.UnexpectedException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
@@ -24,6 +25,7 @@ public class InMemoryUserStorage implements UserStorage {
         return new ArrayList<>(users.values());
     }
 
+    @Override
     public User findById(int id) {
         if (!users.containsKey(id)) {
             throw new DoesNotExistException("Пользователь с идентификатором " + id + " не найден");
@@ -32,6 +34,7 @@ public class InMemoryUserStorage implements UserStorage {
         return users.get(id);
     }
 
+    @Override
     public User create(User user) {
         log.info("Запущен метод по добавлению пользователя. Текущее количество пользователей в базе: {}", users.size());
         if (user.getId() != 0) {
@@ -46,6 +49,7 @@ public class InMemoryUserStorage implements UserStorage {
         return user;
     }
 
+    @Override
     public User update(User user) {
         log.info("Запущен метод по обновлению пользователя. Текущее количество пользователей в базе: {}", users.size());
         if (!users.containsKey(user.getId())) {
@@ -56,6 +60,16 @@ public class InMemoryUserStorage implements UserStorage {
         users.put(user.getId(), user);
         log.info("Данные пользователя с id {} были успешно обновлены. Текущее количество " + "пользователей в базе: {}", user.getId(), users.size());
         return user;
+    }
+
+    @Override
+    public void addFriend(int userId, int friendId) {
+        throw new UnexpectedException("Данный метод еще не определен");
+    }
+
+    @Override
+    public void removeFriend(int userId, int friendId) {
+        throw new UnexpectedException("Данный метод еще не определен");
     }
 
     private void userValidationTest(User user) {

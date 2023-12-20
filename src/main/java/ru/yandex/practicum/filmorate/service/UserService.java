@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+
     private final UserStorage userStorage;
 
     public UserService(UserStorage userStorage) {
@@ -42,28 +43,32 @@ public class UserService {
         return userStorage.update(user);
     }
 
-    public void addFriend(int user1Id, int user2Id) {
-        User user1 = userStorage.findById(user1Id);
-        User user2 = userStorage.findById(user2Id);
+    public void addFriend(int userId, int friendId) {
+        User user1 = userStorage.findById(userId);
+        User user2 = userStorage.findById(friendId);
 
         if (user1 == null || user2 == null) {
             throw new DoesNotExistException("Пользователь с запрошенным идентификатором не найден");
         }
 
-        user1.getFriends().add(user2Id);
-        user2.getFriends().add(user1Id);
+        user2.getFriends().add(userId);
+        userStorage.addFriend(userId, friendId);
     }
 
-    public void removeFriend(int user1Id, int user2Id) {
-        User user1 = userStorage.findById(user1Id);
-        User user2 = userStorage.findById(user2Id);
+    public void removeFriend(int userId, int friendId) {
+        User user1 = userStorage.findById(userId);
+        User user2 = userStorage.findById(friendId);
 
         if (user1 == null || user2 == null) {
             throw new DoesNotExistException("Пользователь с запрошенным идентификатором не найден");
         }
 
-        user1.getFriends().remove(user2Id);
-        user2.getFriends().remove(user1Id);
+        if (!user1.getFriends().contains(friendId)) {
+            throw new DoesNotExistException("У пользователя с id " + userId + " нет в друзьях пользователя с id " + friendId);
+        }
+
+        user2.getFriends().remove(userId);
+        userStorage.removeFriend(userId, friendId);
     }
 
     public List<User> findMutualFriends(int user1Id, int user2Id) {

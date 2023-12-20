@@ -3,31 +3,34 @@ package ru.yandex.practicum.filmorate.controller;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/films")
+@RequestMapping
 public class FilmController {
+
     private final FilmService service;
 
     public FilmController(FilmService service) {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping("/films")
     public List<Film> findAll() {
         return service.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/films/{id}")
     public Film findById(@PathVariable Integer id) {
         return service.findById(id);
     }
 
-    @GetMapping("/popular")
+    @GetMapping("/films/popular")
     public List<Film> findTopLiked(@RequestParam(defaultValue = "10") Integer count) {
         if (count <= 0) {
             throw new ValidationException("Значение параметра count должно быть больше нуля");
@@ -35,22 +38,42 @@ public class FilmController {
         return service.findTopLiked(count);
     }
 
-    @PostMapping
+    @GetMapping("/genres")
+    public List<Genre> findAllGenres() {
+        return service.findAllGenres();
+    }
+
+    @GetMapping("/genres/{id}")
+    public Genre findGenreById(@PathVariable Integer id) {
+        return service.findGenreById(id);
+    }
+
+    @GetMapping("/mpa")
+    public List<Mpa> findAllMpa() {
+        return service.findAllMpa();
+    }
+
+    @GetMapping("/mpa/{id}")
+    public Mpa findMpaById(@PathVariable Integer id) {
+        return service.findMpaById(id);
+    }
+
+    @PostMapping("/films")
     public Film createFilm(@Valid @RequestBody Film film) {
         return service.create(film);
     }
 
-    @PutMapping
+    @PutMapping("/films")
     public Film updateFilm(@Valid @RequestBody Film film) {
         return service.update(film);
     }
 
-    @PutMapping("/{id}/like/{userId}")
+    @PutMapping("/films/{id}/like/{userId}")
     public void addLike(@PathVariable Integer id, @PathVariable Integer userId) {
         service.addLike(id, userId);
     }
 
-    @DeleteMapping("/{id}/like/{userId}")
+    @DeleteMapping("/films/{id}/like/{userId}")
     public void removeLike(@PathVariable Integer id, @PathVariable Integer userId) {
         service.removeLike(id, userId);
     }

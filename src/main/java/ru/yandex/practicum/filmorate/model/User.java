@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +13,7 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class User {
     private int id;
     @Email(message = "Введите корректный адрес электронной почты")
@@ -22,5 +24,5 @@ public class User {
     private String name;
     @Past(message = "Дата рождения не может быть в будущем")
     private LocalDate birthday;
-    private final Set<Integer> friends = new HashSet<>();
+    private Set<Integer> friends = new HashSet<>();
 }

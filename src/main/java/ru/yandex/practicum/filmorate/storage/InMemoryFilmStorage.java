@@ -5,8 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.AlreadyExistException;
 import ru.yandex.practicum.filmorate.exception.DoesNotExistException;
+import ru.yandex.practicum.filmorate.exception.UnexpectedException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Mpa;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -58,6 +61,36 @@ public class InMemoryFilmStorage implements FilmStorage {
         films.put(film.getId(), film);
         log.info("Фильм с id {} был успешно обновлен. Текущее количество фильмов в базе: {}", film.getId(), films.size());
         return film;
+    }
+
+    @Override
+    public List<Genre> findAllGenres() {
+        throw new UnexpectedException("Данный метод еще не определен");
+    }
+
+    @Override
+    public Genre findGenreById(int id) {
+        throw new UnexpectedException("Данный метод еще не определен");
+    }
+
+    @Override
+    public List<Mpa> findAllMpa() {
+        throw new UnexpectedException("Данный метод еще не определен");
+    }
+
+    @Override
+    public Mpa findMpaById(int id) {
+        throw new UnexpectedException("Данный метод еще не определен");
+    }
+
+    @Override
+    public void addLike(int userId, int filmId) {
+        throw new UnexpectedException("Данный метод еще не определен");
+    }
+
+    @Override
+    public void removeLike(int userId, int filmId) {
+        throw new UnexpectedException("Данный метод еще не определен");
     }
 
     private void filmValidationTest(Film film) {
