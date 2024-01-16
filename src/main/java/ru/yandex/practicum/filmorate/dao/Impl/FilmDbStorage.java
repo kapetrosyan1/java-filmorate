@@ -125,10 +125,6 @@ public class FilmDbStorage implements FilmStorage {
         }
     }
 
-    private Mpa findMpaById(int id) {
-        return mpaDbStorage.findById(id);
-    }
-
     @Override
     public void addLike(int userId, int filmId) {
         String sql = "INSERT INTO likes (film_id, user_id) VALUES (?, ?)";
@@ -154,7 +150,7 @@ public class FilmDbStorage implements FilmStorage {
                 rs.getString("description"),
                 rs.getDate("release_date").toLocalDate(),
                 rs.getInt("duration"),
-                findMpaById(rs.getInt("mpa_id")),
+                mpaDbStorage.findById(rs.getInt("mpa_id")),
                 new TreeSet<>(),
                 new TreeSet<>(Comparator.comparing(Genre::getId)));
     }
