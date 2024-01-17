@@ -14,7 +14,6 @@ import ru.yandex.practicum.filmorate.exception.UnexpectedException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
-import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
 import java.time.LocalDate;
@@ -125,10 +124,6 @@ public class FilmDbStorage implements FilmStorage {
         }
     }
 
-    private Mpa findMpaById(int id) {
-        return mpaDbStorage.findById(id);
-    }
-
     @Override
     public void addLike(int userId, int filmId) {
         String sql = "INSERT INTO likes (film_id, user_id) VALUES (?, ?)";
@@ -154,7 +149,7 @@ public class FilmDbStorage implements FilmStorage {
                 rs.getString("description"),
                 rs.getDate("release_date").toLocalDate(),
                 rs.getInt("duration"),
-                findMpaById(rs.getInt("mpa_id")),
+                mpaDbStorage.findById(rs.getInt("mpa_id")),
                 new TreeSet<>(),
                 new TreeSet<>(Comparator.comparing(Genre::getId)));
     }
