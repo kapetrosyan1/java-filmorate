@@ -37,10 +37,8 @@ public class FilmDbStorage implements FilmStorage {
         String sql = "SELECT * FROM films";
         List<Film> filmList = jdbcTemplate.query(sql, filmRowMapper());
         for (Film film : filmList) {
-            Set<Genre> genres = new TreeSet<>(Comparator.comparing(Genre::getId));
-            genres.addAll(genreDbStorage.findByFilmId(film.getId()));
-            film.setGenres(genres);
-            film.setLikes(new TreeSet<>(getFilmLikes(film.getId())));
+            film.getGenres().addAll(genreDbStorage.findByFilmId(film.getId()));
+            film.getLikes().addAll(getFilmLikes(film.getId()));
         }
         return filmList;
     }
@@ -85,13 +83,9 @@ public class FilmDbStorage implements FilmStorage {
         if (updatedRows != 1) {
             throw new UnexpectedException("При обновлении данных пользователя произошла непредвиденная ошибка");
         }
-        /*
-        Код ниже в целом лишний, но тесты Postman жаловались на порядок выдачи жанров. Другого способа решить проблему не смог
-         */
+
         if (film.getGenres() != null) {
-            Set<Genre> genres = new TreeSet<>(Comparator.comparing(Genre::getId));
-            genres.addAll(film.getGenres());
-            film.setGenres(genres);
+            film.setGenres(new TreeSet<>(film.getGenres()));
         }
 
         genreDbStorage.updateFilmGenre(film);
@@ -107,9 +101,7 @@ public class FilmDbStorage implements FilmStorage {
             if (film == null) {
                 throw new UnexpectedException("Случилась непредвиденная ошибка - передан null");
             }
-            Set<Genre> genres = new TreeSet<>(Comparator.comparing(Genre::getId));
-            genres.addAll(genreDbStorage.findByFilmId(id));
-            film.setGenres(genres);
+            film.getGenres().addAll(genreDbStorage.findByFilmId(id));
 
             List<Integer> likes = getFilmLikes(id);
 
@@ -151,7 +143,8 @@ public class FilmDbStorage implements FilmStorage {
                 rs.getInt("duration"),
                 mpaDbStorage.findById(rs.getInt("mpa_id")),
                 new TreeSet<>(),
-                new TreeSet<>(Comparator.comparing(Genre::getId)));
+                new TreeSet<>()
+        );
     }
 
     private List<Integer> getFilmLikes(int filmId) {
