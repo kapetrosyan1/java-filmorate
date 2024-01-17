@@ -3,9 +3,9 @@ package ru.yandex.practicum.filmorate.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
 public class Mpa {
-    int id;
-    String name;
+    private int id;
+    private String name;
 }
