@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.AlreadyExistException;
 import ru.yandex.practicum.filmorate.exception.DoesNotExistException;
+import ru.yandex.practicum.filmorate.exception.UnexpectedException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
@@ -56,6 +57,14 @@ public class InMemoryUserStorage implements UserStorage {
         users.put(user.getId(), user);
         log.info("Данные пользователя с id {} были успешно обновлены. Текущее количество " + "пользователей в базе: {}", user.getId(), users.size());
         return user;
+    }
+
+    public void addFriend(int userId, int friendId) {
+        throw new UnexpectedException("Данный метод еще не был реализован");
+    }
+
+    public void removeFriend(int userId, int friendId) {
+        throw new UnexpectedException("Данный метод еще не был реализован");
     }
 
     private void userValidationTest(User user) {

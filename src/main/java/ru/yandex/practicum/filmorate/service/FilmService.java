@@ -37,18 +37,17 @@ public class FilmService {
         checkFilmAndUserId(filmId, userId);
         Film film = filmStorage.findById(filmId);
         film.getLikes().add(userId);
+        filmStorage.addLike(userId, filmId);
     }
 
     public void removeLike(int filmId, int userId) {
         checkFilmAndUserId(filmId, userId);
         Film film = filmStorage.findById(filmId);
         film.getLikes().remove(userId);
+        filmStorage.removeLike(userId, filmId);
     }
 
     public List<Film> findTopLiked(int count) {
-        if (filmStorage.findAll().isEmpty()) {
-            throw new DoesNotExistException("Фильмов в базе пока нет");
-        }
         return filmStorage.findAll().stream()
                 .sorted((f0, f1) -> -1 * (f0.getLikes().size() - f1.getLikes().size()))
                 .limit(count)

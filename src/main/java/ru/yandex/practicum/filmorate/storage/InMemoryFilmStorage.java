@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.AlreadyExistException;
 import ru.yandex.practicum.filmorate.exception.DoesNotExistException;
+import ru.yandex.practicum.filmorate.exception.UnexpectedException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
@@ -58,6 +59,14 @@ public class InMemoryFilmStorage implements FilmStorage {
         films.put(film.getId(), film);
         log.info("Фильм с id {} был успешно обновлен. Текущее количество фильмов в базе: {}", film.getId(), films.size());
         return film;
+    }
+
+    public void addLike(int userId, int filmId) {
+        throw new UnexpectedException("Данный метод еще не был реализован");
+    }
+
+    public void removeLike(int userId, int filmId) {
+        throw new UnexpectedException("Данный метод еще не был реализован");
     }
 
     private void filmValidationTest(Film film) {
